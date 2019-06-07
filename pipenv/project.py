@@ -795,7 +795,8 @@ class Project(object):
                 for package in data.get(section, {}):
                     if hasattr(data[section][package], "keys"):
                         table = tomlkit.inline_table()
-                        table.update(data[section][package])
+                        for key in sorted(six.iterkeys(data[section][package])):
+                            table.add(key, data[section][package][key])
                         document[section][package] = table
                     else:
                         document[section][package] = tomlkit.string(data[section][package])
